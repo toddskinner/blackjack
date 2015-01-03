@@ -5,6 +5,7 @@ class window.HandView extends Backbone.View
 
   initialize: ->
     @collection.on 'add remove change', => @render()
+    @collection.on 'click: .stand-button', => @disableButtons()
     @render()
 
   render: ->
@@ -17,4 +18,14 @@ class window.HandView extends Backbone.View
       @$('.score').text @collection.dealerScore()
     else
       @$('.score').text @collection.scores()[0]
+
+    if @collection.busted()
+      alert 'BUSTED!'
+      @disableButtons()
+      return
+
+  disableButtons: ->
+    $('.hit-button').prop("disabled", true)
+    $('.stand-button').prop("disabled", true)
+    return
 

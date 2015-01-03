@@ -10,6 +10,8 @@ class window.AppView extends Backbone.View
     'click .stand-button': ->
       @model.get('playerHand').stand()
       @model.get('dealerHand').stand()
+      $('.hit-button').prop("disabled", true)
+      $('.stand-button').prop("disabled", true)
       return
 
   initialize: ->

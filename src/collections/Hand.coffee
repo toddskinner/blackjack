@@ -14,7 +14,7 @@ class window.Hand extends Backbone.Collection
      # if @hasAce()
       #  highScore = scores()[1]
       @hit() while @dealerScore() < 17
-    return
+    return true
 
   dealerScore: ->
     # if hasAce
@@ -39,6 +39,7 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
 
-  busted: -> if @minScore() > 21 then true else false
+  busted: -> if @scores()[0] > 21 then true else false
+
 
 
