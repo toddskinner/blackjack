@@ -11,9 +11,19 @@ class window.Hand extends Backbone.Collection
     if @isDealer
       @at(0).flip()
       # check dealer score
-      @hit() while @minScore() <= 17
+     # if @hasAce()
+      #  highScore = scores()[1]
+      @hit() while @dealerScore() < 17
     return
 
+  dealerScore: ->
+    # if hasAce
+    # then check each of scores array if either (scores[1] >= 17 && scores[1] <= 21) || (scores[0]>=17)
+    # if it is, then stop
+    if @hasAce()
+      if @scores()[1] >= 17 && @scores()[1] <= 21
+        return @scores()[1]
+    return @minScore()
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
