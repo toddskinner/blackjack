@@ -31,3 +31,11 @@ class window.App extends Backbone.Model
       alert 'You Win'
     return
 
+  newGame: ->
+    @set 'playerHand', @get('deck').dealPlayer()
+    @set 'dealerHand', @get('deck').dealDealer()
+    @get('dealerHand').on "endGame", @gameResult, this
+    @get('playerHand').on "endGame", @gameResult, this
+    #@initialize()
+    console.log @get 'playerHand'
+    return

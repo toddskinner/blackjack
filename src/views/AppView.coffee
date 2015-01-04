@@ -1,6 +1,6 @@
 class window.AppView extends Backbone.View
   template: _.template '
-    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button>
+    <button class="hit-button">Hit</button> <button class="stand-button">Stand</button> <button class="new-game-button"> New Game</button>
     <div class="player-hand-container"></div>
     <div class="dealer-hand-container"></div>
   '
@@ -10,7 +10,12 @@ class window.AppView extends Backbone.View
     'click .stand-button': ->
     #  @model.get('playerHand').stand()
       @model.get('dealerHand').stand()
-      @disableButtons
+      @disableButtons()
+      return
+    'click .new-game-button': ->
+      @model.newGame()
+      @enableButtons()
+      @render()
       return
 
 
@@ -31,4 +36,9 @@ class window.AppView extends Backbone.View
   disableButtons: ->
     $('.hit-button').prop("disabled", true)
     $('.stand-button').prop("disabled", true)
+    return
+
+  enableButtons: ->
+    $('.hit-button').prop("disabled", false)
+    $('.stand-button').prop("disabled", false)
     return
