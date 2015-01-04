@@ -1,4 +1,4 @@
-.card {
+ .card {
   float: left;
   border: solid 1px black;
   width: 120px;
@@ -16,5 +16,5 @@
 }
 
 body {
-  background-color: green;
+  background: url("../img/table2.jpg");
 }

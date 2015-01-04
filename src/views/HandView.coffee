@@ -13,16 +13,16 @@ class window.HandView extends Backbone.View
     @$el.html @template @collection
     @$el.append @collection.map (card) ->
       new CardView(model: card).$el
-    console.log @collection.isDealer
     if @collection.isDealer
-      @$('.score').text @collection.dealerScore()
+      @$('.score').text @collection.bestScore()
     else
-      @$('.score').text @collection.scores()[0]
-
+      if @collection.hasAce()
+        @$('.score').text @collection.scores()[0] + ' or ' + @collection.scores()[1]
+      else
+        @$('.score').text @collection.scores()[0]
     if @collection.busted()
-      alert 'BUSTED!'
       @disableButtons()
-      return
+    return
 
   disableButtons: ->
     $('.hit-button').prop("disabled", true)

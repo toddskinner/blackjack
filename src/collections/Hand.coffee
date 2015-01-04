@@ -1,7 +1,11 @@
 class window.Hand extends Backbone.Collection
   model: Card
 
+
   initialize: (array, @deck, @isDealer) ->
+    @isBusted = false
+    @isBlackjack = false
+    return
 
   hit: ->
     @add(@deck.pop())
@@ -13,10 +17,11 @@ class window.Hand extends Backbone.Collection
       # check dealer score
      # if @hasAce()
       #  highScore = scores()[1]
-      @hit() while @dealerScore() < 17
+      @hit() while @bestScore() < 17
+      @trigger('endGame', @)
     return true
 
-  dealerScore: ->
+  bestScore: ->
     # if hasAce
     # then check each of scores array if either (scores[1] >= 17 && scores[1] <= 21) || (scores[0]>=17)
     # if it is, then stop
@@ -39,7 +44,24 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
 
-  busted: -> if @scores()[0] > 21 then true else false
+  busted: -> if @scores()[0] > 21
+    @isBusted = true
+    @trigger('endGame', @)
+    return true
+  else
+    return false
 
+  blackjack: ->
+    if @hasAce()
+      currScore = @models[0].attributes.value + @models[1].attributes.value + 10
+    else
+      currScore = @models[0].attributes.value + @models[1].attributes.value
+    console.log currScore
+    if currScore is 21
+      @isBlackjack = true
+      @trigger('endGame', @)
+  #  return true
+  #else
+   # return false
 
 
